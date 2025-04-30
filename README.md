@@ -1,4 +1,4 @@
-## Compositional Textual Inversion for Music Generation
+# Compositional Music Generation using Textual Inversion
 
 This repository explores Textual Inversion (TI) for guiding music generation using MusicGen. We inject learned genre-specific tokens into MusicGen’s language model (LM) embedding space and analyze their effect on controllability and alignment using CLAP similarity metrics.
 
