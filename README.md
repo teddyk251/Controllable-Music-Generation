@@ -2,13 +2,11 @@
 
 This repository explores Textual Inversion (TI) for guiding music generation using MusicGen. We inject learned genre-specific tokens into MusicGen’s language model (LM) embedding space and analyze their effect on controllability and alignment using CLAP similarity metrics.
 
-⸻
 
 ### Project Overview
 
 We propose a compositional textual inversion framework that learns new token embeddings (<lofi>, <jazz>, etc.) from short audio clips. These tokens can be inserted into music prompts to guide MusicGen to generate music in specific genres. We compare the results with baseline generations that do not use TI.
 
-⸻
 
 ### Setup
 
