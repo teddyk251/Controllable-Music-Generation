@@ -21,7 +21,7 @@ trained_token_dir2 = f"trained_tokens/{GENRE_2}"
 # -------------------------
 # LOAD MODEL
 # -------------------------
-print(f"🎵 Loading MusicGen: {MODEL_SIZE}")
+print(f"Loading MusicGen: {MODEL_SIZE}")
 model = MusicGen.get_pretrained(MODEL_SIZE)
 model.set_generation_params(duration=DURATION)
 
@@ -31,7 +31,7 @@ model.lm.eval()
 # -------------------------
 # INJECT BOTH TOKENS
 # -------------------------
-print(f"🛠️ Injecting tokens {TOKEN_1} and {TOKEN_2} into the model...")
+print(f"Injecting tokens {TOKEN_1} and {TOKEN_2} into the model...")
 
 for i in range(4):  # 4 codebooks
     # Load embeddings separately
@@ -45,18 +45,18 @@ for i in range(4):  # 4 codebooks
     new_weight = torch.cat([old_emb, token1, token2], dim=0)  # Add two tokens
     emb_layer.weight = torch.nn.Parameter(new_weight)
 
-print(f"✅ Both tokens injected!")
+print(f"Both tokens injected!")
 
 # -------------------------
 # GENERATE MUSIC
 # -------------------------
 PROMPT = f"A vibrant fusion of {TOKEN_1} and {TOKEN_2} styles with rhythmic guitars"
 
-print(f"📝 Prompt: {PROMPT}")
+print(f"Prompt: {PROMPT}")
 
 output_wav = model.generate([PROMPT], progress=True)[0].cpu()
 
 save_path = f"generated_{GENRE_1}_{GENRE_2}_fusion.wav"
 torchaudio.save(save_path, output_wav, SAMPLE_RATE)
 
-print(f"✅ Generated composed audio saved at: {save_path}")
+print(f"Generated composed audio saved at: {save_path}")

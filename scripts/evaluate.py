@@ -141,7 +141,7 @@ for genre_name, info in GENRES.items():
 # -------------------------
 results_df = pd.DataFrame(results)
 results_df.to_csv(f"{OUTPUT_DIR}/similarity_results.csv", index=False)
-print(f"✅ Results saved to {OUTPUT_DIR}/similarity_results.csv")
+print(f"Results saved to {OUTPUT_DIR}/similarity_results.csv")
 
 # -------------------------
 # PLOT
@@ -160,5 +160,5 @@ ax.legend()
 
 plt.tight_layout()
 plt.savefig(f"{OUTPUT_DIR}/clap_similarity_barchart.png")
-print(f"✅ Barchart saved to {OUTPUT_DIR}/clap_similarity_barchart.png")
+print(f"Barchart saved to {OUTPUT_DIR}/clap_similarity_barchart.png")
 plt.close()

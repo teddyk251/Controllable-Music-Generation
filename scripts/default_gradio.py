@@ -18,7 +18,7 @@ TI_TOKEN_DIR = "trained_tokens"  # where your learned tokens are stored
 # -------------------------
 # LOAD MODEL
 # -------------------------
-print(f"🎵 Loading MusicGen model: {MODEL_SIZE}")
+print(f"Loading MusicGen model: {MODEL_SIZE}")
 model = MusicGen.get_pretrained(MODEL_SIZE)
 model.set_generation_params(duration=DURATION)
 model.lm = model.lm.to(DEVICE)
@@ -31,13 +31,13 @@ def inject_tokens(genres):
     for genre in genres:
         token_dir = os.path.join(TI_TOKEN_DIR, genre)
         if not os.path.exists(token_dir):
-            print(f"⚠️ Warning: No tokens found for {genre}")
+            print(f"Warning: No tokens found for {genre}")
             continue
         print(f"🛠️ Injecting {genre} tokens...")
         for i in range(4):  # 4 codebooks
             token_path = os.path.join(token_dir, f"{genre}_codebook{i}.pt")
             if not os.path.exists(token_path):
-                print(f"⚠️ Warning: Missing token {i} for {genre}")
+                print(f"Warning: Missing token {i} for {genre}")
                 continue
             new_token = torch.load(token_path).to(DEVICE)
             emb_layer = model.lm.emb[i]
@@ -46,7 +46,7 @@ def inject_tokens(genres):
             emb_layer.weight = torch.nn.Parameter(new_weight)
 
 inject_tokens(TI_GENRES)
-print("✅ All tokens injected!")
+print("All tokens injected!")
 
 # -------------------------
 # GENERATE MUSIC FUNCTION
@@ -57,7 +57,7 @@ def generate_music(prompt, use_ti, selected_token):
     else:
         ti_prompt = prompt
 
-    print(f"📝 Final prompt: {ti_prompt}")
+    print(f"Final prompt: {ti_prompt}")
 
     # Generate music
     output_wav = model.generate([ti_prompt], progress=True)[0].cpu()
@@ -74,7 +74,7 @@ def generate_music(prompt, use_ti, selected_token):
 # BUILD GRADIO APP
 # -------------------------
 with gr.Blocks() as app:
-    gr.Markdown("# 🎶 MusicGen + Textual Inversion (TI) Demo")
+    gr.Markdown("# MusicGen + Textual Inversion (TI) Demo")
     gr.Markdown("Generate music from text prompts. Optionally guide generation using learned TI tokens!")
 
     # Prompt

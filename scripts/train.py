@@ -23,12 +23,12 @@ MIN_LR = 1e-6
 WANDB_PROJECT = "musicgen-textual-inversion_150s"  # Your project name
 USE_WANDB = True  # set False if you don't want to log
 
-wandb.login(key="a1ce80927386bbad259872cbd0b14a573c95f5b8")  # Login to Weights & Biases
+wandb.login(key="")  # Login to Weights & Biases
 
 # -------------------------
 # LOAD MODEL
 # -------------------------
-print(f"🎵 Loading MusicGen: {MODEL_SIZE}")
+print(f"Loading MusicGen: {MODEL_SIZE}")
 model = MusicGen.get_pretrained(MODEL_SIZE)
 model.set_generation_params(duration=10)
 model.lm = model.lm.to(DEVICE)
@@ -37,7 +37,7 @@ model.lm.eval()
 # -------------------------
 # LOAD DATASET
 # -------------------------
-print("📚 Loading training dataset...")
+print("Loading training dataset...")
 genre_to_paths = {}
 
 for genre_folder in os.listdir(DATA_DIR):
@@ -51,7 +51,7 @@ for genre_folder in os.listdir(DATA_DIR):
     if paths:
         genre_to_paths[genre_folder] = paths
 
-print(f"✅ Found {sum(len(v) for v in genre_to_paths.values())} training samples across {len(genre_to_paths)} genres.")
+print(f"Found {sum(len(v) for v in genre_to_paths.values())} training samples across {len(genre_to_paths)} genres.")
 
 # -------------------------
 # TRAIN TOKENS PER GENRE
@@ -60,8 +60,8 @@ save_dir = "trained_tokens"
 os.makedirs(save_dir, exist_ok=True)
 
 for genre_name, audio_paths in genre_to_paths.items():
-    print(f"\n🔥 Training token for genre: {genre_name}")
-    print(f"✅ Found {len(audio_paths)} clips for {genre_name}")
+    print(f"\nTraining token for genre: {genre_name}")
+    print(f"Found {len(audio_paths)} clips for {genre_name}")
 
     # W&B initialization for each genre
     if USE_WANDB:
@@ -87,7 +87,7 @@ for genre_name, audio_paths in genre_to_paths.items():
 
     for i, emb_layer in enumerate(model.lm.emb):
         vocab_size, emb_dim = emb_layer.weight.shape
-        print(f"🧩 Codebook {i}: vocab_size={vocab_size}, emb_dim={emb_dim}")
+        print(f"Codebook {i}: vocab_size={vocab_size}, emb_dim={emb_dim}")
 
         new_token = torch.nn.Parameter(torch.randn(1, emb_dim, device=DEVICE) * 0.02)
         new_token_embeddings.append(new_token)
@@ -138,7 +138,7 @@ for genre_name, audio_paths in genre_to_paths.items():
         avg_loss = total_loss / len(audio_paths)
         scheduler.step(avg_loss)
 
-        print(f"🎯 {genre_name} Epoch {epoch+1}: Average Loss = {avg_loss:.6f}")
+        print(f"{genre_name} Epoch {epoch+1}: Average Loss = {avg_loss:.6f}")
 
         if USE_WANDB:
             wandb.log({
@@ -157,9 +157,9 @@ for genre_name, audio_paths in genre_to_paths.items():
         token_path = os.path.join(genre_token_dir, f"{genre_name}_codebook{i}.pt")
         torch.save(token.detach().cpu(), token_path)
 
-    print(f"💾 Saved trained embeddings for {genre_name} to {genre_token_dir}")
+    print(f"Saved trained embeddings for {genre_name} to {genre_token_dir}")
 
     if USE_WANDB:
         wandb.finish()
 
-print("\n✅✅✅ All genres training complete!")
+print("\nAll genres training complete!")

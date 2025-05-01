@@ -18,7 +18,7 @@ trained_token_dir = f"trained_tokens/{GENRE_NAME}"
 # -------------------------
 # LOAD MODEL
 # -------------------------
-print(f"🎵 Loading MusicGen: {MODEL_SIZE}")
+print(f"Loading MusicGen: {MODEL_SIZE}")
 model = MusicGen.get_pretrained(MODEL_SIZE)
 model.set_generation_params(duration=DURATION)
 
@@ -45,7 +45,7 @@ for i in range(4):  # 4 codebooks
     # Replace the embedding layer's weight
     emb_layer.weight = torch.nn.Parameter(new_weight)
 
-print(f"✅ Learned tokens injected into model!")
+print(f"Learned tokens injected into model!")
 
 # -------------------------
 # GENERATE MUSIC
@@ -58,7 +58,7 @@ PROMPT = f"a happy {LEARNED_TOKEN} beat"
 # PROMPT = f"A soulful {LEARNED_TOKEN} track with a catchy guitar riffs"
 # PROMPT = f"An upbeat {LEARNED_TOKEN} track "
 
-print(f"📝 Prompt: {PROMPT}")
+print(f"Prompt: {PROMPT}")
 
 output_wav = model.generate([PROMPT], progress=True)[0].cpu()  # (Channels, Samples)
 
@@ -66,4 +66,4 @@ output_wav = model.generate([PROMPT], progress=True)[0].cpu()  # (Channels, Samp
 save_path = f"generated_{GENRE_NAME}.wav"
 torchaudio.save(save_path, output_wav, SAMPLE_RATE)
 
-print(f"✅ Generated audio saved at: {save_path}")
+print(f"Generated audio saved at: {save_path}")

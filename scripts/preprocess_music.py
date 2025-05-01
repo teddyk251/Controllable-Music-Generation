@@ -50,7 +50,7 @@ def preprocess_audio(file_path, target_sr=32000, target_duration=150, start_sec=
 # MAIN SCRIPT
 # -------------------------
 
-print(f"🚀 Starting preprocessing from {RAW_DATA_DIR}...")
+print(f"Starting preprocessing from {RAW_DATA_DIR}...")
 
 for genre_folder in tqdm(os.listdir(RAW_DATA_DIR)):
     genre_path = os.path.join(RAW_DATA_DIR, genre_folder)
@@ -69,6 +69,6 @@ for genre_folder in tqdm(os.listdir(RAW_DATA_DIR)):
                 processed_waveform = preprocess_audio(input_path)
                 torchaudio.save(output_path, processed_waveform, TARGET_SAMPLE_RATE)
             except Exception as e:
-                print(f"❌ Error processing {input_path}: {e}")
+                print(f"Error processing {input_path}: {e}")
 
-print("✅ Preprocessing complete! Files saved under:", OUTPUT_DIR)
+print("Preprocessing complete! Files saved under:", OUTPUT_DIR)

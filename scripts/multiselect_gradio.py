@@ -18,7 +18,7 @@ TI_TOKEN_DIR  = "trained_tokens"
 # -------------------------
 # LOAD & INJECT TOKENS
 # -------------------------
-print(f"🎵 Loading MusicGen model: {MODEL_SIZE}")
+print(f"Loading MusicGen model: {MODEL_SIZE}")
 model = MusicGen.get_pretrained(MODEL_SIZE)
 model.set_generation_params(duration=DURATION)
 model.lm = model.lm.to(DEVICE)
@@ -28,18 +28,18 @@ def inject_tokens(genres):
     for g in genres:
         token_dir = os.path.join(TI_TOKEN_DIR, g)
         if not os.path.isdir(token_dir):
-            print(f"⚠️ No tokens for {g}")
+            print(f"No tokens for {g}")
             continue
         for i in range(4):
             path = os.path.join(token_dir, f"{g}_codebook{i}.pt")
             if not os.path.isfile(path):
-                print(f"⚠️ Missing {g}_codebook{i}")
+                print(f"Missing {g}_codebook{i}")
                 continue
             new_t = torch.load(path).to(DEVICE)
             emb  = model.lm.emb[i]
             emb.weight = torch.nn.Parameter(torch.cat([emb.weight.data, new_t], dim=0))
 inject_tokens(TI_GENRES)
-print("✅ All tokens injected!")
+print("All tokens injected!")
 
 # -------------------------
 # PROMPT-UPDATE & GENERATION
@@ -64,7 +64,7 @@ def generate_music(prompt, use_ti, tokens):
     final_prompt = prompt
     if use_ti and tokens:
         final_prompt = update_prompt(prompt, tokens)
-    print("▶️ Using prompt:", final_prompt)
+    print("▶Using prompt:", final_prompt)
 
     wav = model.generate([final_prompt], progress=True)[0].cpu()
     os.makedirs("gradio_generated", exist_ok=True)
@@ -76,7 +76,7 @@ def generate_music(prompt, use_ti, tokens):
 # BUILD THE UI
 # -------------------------
 with gr.Blocks() as app:
-    gr.Markdown("## 🎶 MusicGen + Textual Inversion Demo")
+    gr.Markdown("## MusicGen + Textual Inversion Demo")
     prompt_input = gr.Textbox(label="Prompt", placeholder="e.g. a danceable afrobeat track")
 
     use_ti = gr.Checkbox(label="Use Textual Inversion?", value=False)
