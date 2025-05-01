@@ -1,20 +1,14 @@
-Absolutely! Below is a detailed, professional, and well-structured README for your MusicGen Textual Inversion project based on your experiments and scripts. It includes installation, training, inference, evaluation, and demo usage.
-
-⸻
-
-🎵 Compositional Textual Inversion for Music Generation
+# Compositional Music Generation using Textual Inversion
 
 This repository explores Textual Inversion (TI) for guiding music generation using MusicGen. We inject learned genre-specific tokens into MusicGen’s language model (LM) embedding space and analyze their effect on controllability and alignment using CLAP similarity metrics.
 
-⸻
 
-🧠 Project Overview
+### Project Overview
 
 We propose a compositional textual inversion framework that learns new token embeddings (<lofi>, <jazz>, etc.) from short audio clips. These tokens can be inserted into music prompts to guide MusicGen to generate music in specific genres. We compare the results with baseline generations that do not use TI.
 
-⸻
 
-🔧 Setup
+### Setup
 
 1. Clone and Install
 
@@ -30,11 +24,7 @@ pip install -r requirements.txt
 
 ```sudo apt-get install ffmpeg  # or use homebrew on Mac```
 
-
-
-
-
-📂 Directory Structure
+### Directory Structure
 
 <pre><code>
 ├── scripts/
@@ -55,11 +45,9 @@ pip install -r requirements.txt
 
 
 
+### Training
 
-
-📚 Training
-
-🏷️ Train TI Tokens for All Genres
+#### Train TI Tokens for All Genres
 
 ```python scripts/train.py```
 
@@ -67,7 +55,7 @@ pip install -r requirements.txt
 	•	Stores them in trained_tokens/{genre}/{genre}_codebook{i}.pt
 	•	Logs training loss and learning rate via Weights & Biases
 
-🧪 Configuration
+#### Configuration
 
 Modify these in train.py:
 ```
@@ -81,7 +69,7 @@ WANDB_PROJECT = "musicgen-textual-inversion_150s"
 
 
 
-🎧 Inference
+### Inference
 
 Generate music using a trained TI token:
 
@@ -98,7 +86,7 @@ Output is saved to generated_{GENRE_NAME}.wav.
 
 
 
-📈 Evaluation
+### Evaluation
 
 Evaluate CLAP similarity between generated audio and text prompts:
 
@@ -110,7 +98,7 @@ Evaluate CLAP similarity between generated audio and text prompts:
 
 
 
-🌐 Gradio App (Interactive Demo)
+### Gradio App (Interactive Demo)
 
 Launch an interactive app:
 
@@ -123,7 +111,7 @@ Launch an interactive app:
 
 
 
-🧪 Experimental Highlights
+### Experimental Highlights
 
 | Genre     | TI Prompt Example                                | Key Observations                            |
 |-----------|--------------------------------------------------|---------------------------------------------|
@@ -150,7 +138,7 @@ Notes
 
 
 
-📜 Citation
+### Citation
 
 If this project helps your work, please consider citing MusicGen:
 
