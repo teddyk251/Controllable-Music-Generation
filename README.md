@@ -1,7 +1,10 @@
 # Compositional Music Generation using Textual Inversion
 
-This repository explores Textual Inversion (TI) for guiding music generation using MusicGen. We inject learned genre-specific tokens into MusicGen’s language model (LM) embedding space and analyze their effect on controllability and alignment using CLAP similarity metrics.
+This repository explores Textual Inversion (TI) for guiding music generation using MusicGen. We inject learned genre-specific tokens into MusicGen's language model (LM) embedding space and analyze their effect on controllability and alignment using CLAP similarity metrics.
 
+## Project Report
+
+📄 **[Compositional Textual Inversion for Controllable Music Generation](./docs/Compositional%20Textual%20Inversion%20for%20Controllable%20Music%20Generation.pdf)** - Detailed technical report covering methodology, experiments, and results.
 
 ### Project Overview
 
@@ -36,6 +39,8 @@ pip install -r requirements.txt
 ├── preprocessed_data_2/   # Audio clips for training (150s)
 ├── gradio_generated/      # Generated audio clips via Gradio
 ├── wandb/                 # Experiment logs (if W&B used)
+├── docs/                  # Project documentation
+│   └── Compositional Textual Inversion for Controllable Music Generation.pdf
 ├── results/
 │   ├── clap_scores.json   # Evaluation results
 │   └── similarity_plot.png
